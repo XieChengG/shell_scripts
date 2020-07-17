@@ -27,9 +27,27 @@ chkHostOnline() {
     done
 }
 
+# 并发的检测在在线的机器
+concurrenceChk() {
+    local IP="10.0.0."
+    for N in $(seq 254)
+    do
+	{
+	    ping -c 2 -W 2 $IP$N &>/dev/null
+	    RETVAL=$?
+	    if [ $RETVAL -eq 0 ]; then
+		action "$IP$N is online" /bin/true
+	    else
+		action "$IP$N is offline" /bin/false
+	    fi
+	}&
+    done
+}
+
 # 主函数
 main() {
     checkUser
-    chkHostOnline
+    #chkHostOnline
+    concurrenceChk
 }
 main
