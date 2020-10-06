@@ -5,7 +5,7 @@ export PATH
 
 checkParams() {
     if [ $# -ne 2 ]; then
-        echo "Error, Please input two int params\nUsage: sh $0 {num1} {num2}"
+        echo -e "Error, Please input two int params\nUsage: sh $0 {num1} {num2}"
 	exit 1
     fi
 }
